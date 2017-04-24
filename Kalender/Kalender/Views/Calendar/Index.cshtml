@@ -1,0 +1,100 @@
+﻿@model IEnumerable<Kalender.Models.CalendarModel>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+@{
+    ViewBag.Title = "Calendar";
+}
+
+
+<h2>Calendar</h2>
+
+<div class="container theme-showcase">
+      
+    <div id="holder" class="row"></div>
+    </div>
+
+<script type="text/tmpl" id="tmpl">
+    {{
+    var date = date || new Date(),
+    month = date.getMonth(),
+    year = date.getFullYear(),
+    first = new Date(year, month, 1),
+    last = new Date(year, month + 1, 0),
+    startingDay = first.getDay(),
+    thedate = new Date(year, month, 2 - startingDay),
+    dayclass = lastmonthcss,
+    today = new Date(),
+    i, j;
+    }}
+   
+   <table class="calendar-table table table-condensed table-tight">
+        <thead>
+            <tr>
+                <td colspan="7" style="text-align: center">
+                    <table style="white-space: nowrap; width: 100%">
+                        <tr>
+                            <td style="text-align: left;">
+                                <span class="btn-group">
+                                    <button class="js-cal-prev btn btn-default">&lt;</button>
+                                    <button class="js-cal-next btn btn-default">&gt;</button>
+                                </span>
+                                <button class="js-cal-option btn btn-default 
+                                        {{: first.toDateInt() <= today.toDateInt() && today.toDateInt() <= last.toDateInt() ? 'active':'' }}" data-date="
+                                        {{: today.toISOString()}}" data-mode="month">
+                                        {{: todayname }}</button>
+                            </td>
+                            <td>
+                                <span class="btn-group btn-group-lg">
+                                    {{ if (mode !== 'day') { }}
+                                    {{ if (mode === 'month') { }}
+                                    <button class="js-cal-option btn btn-link">{{: months[month] }}</button>{{ } }}
+                                    <button class="js-cal-years btn btn-link">{{: year}}</button>
+                                    {{ } else { }}
+                                    <button class="btn btn-link disabled">{{: date.toDateString() }}</button>
+                                    {{ } }}
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+
+                </td>
+            </tr>
+        {{ if (mode ==='month') { }}
+            <tr class="c-weeks">
+                {{ for (i = 0; i < 7; i++) { }}
+                <th class="c-name">
+                    {{: days[i] }}
+                </th>
+                {{ } }}
+            </tr>
+        </thead>
+        <tbody>
+            {{ for (j = 0; j < 6 && (j < 1 || mode === 'month'); j++) { }}
+            <br>
+                {{ for (i = 0; i < 7; i++) { }}
+                {{ if (thedate > last) { dayclass = nextmonthcss; } else if (thedate >= first) { dayclass = thismonthcss; } }}
+                <td class="calendar-day
+                    {{: dayclass }}
+                    {{: thedate.toDateCssClass() }}
+                    {{: date.toDateCssClass() === thedate.toDateCssClass() ? 'selected':'' }}
+                    {{: daycss[i] }} js-cal-option" data-date="
+                    {{: thedate.toISOString() }}">
+                    <div class="date">{{: thedate.getDate() }}</div>
+                    {{ thedate.setDate(thedate.getDate() + 1);}}
+                 
+                    </td>
+                    {{ } }}
+                    </tr>
+                    {{ } }}
+
+         </tbody>
+        {{ } }}
+
+    </table>
+</script>
+<script src="~/Scripts/calendar.js"></script> 
+    
+ 
+
+

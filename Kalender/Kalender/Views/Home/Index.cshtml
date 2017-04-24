@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Kalender.Models.CalendarModel>
+
+
+@{
+    ViewBag.Title = "Calendar";
+}
+
+<h2>Calendar</h2>
+
+<p>
+        @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SchemaType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SchemaData)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookingDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TrainingPass)
+            </th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SchemaType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SchemaData)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookingDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrainingPass)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+    }
+
+    </table>
